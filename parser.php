@@ -2,7 +2,14 @@
 
 <?php
 
-$filename = 'records.csv';
+$arguments = getopt("f:t:");
+
+if (false === $arguments || 0 === count($arguments)) {
+    echo "\nUsage:" .
+        "\nphp " . $argv[0] . " -f filename";
+}
+
+$filename = $arguments['f'];
 
 printRecords(readDiscogsCsv($filename));
 
