@@ -24,15 +24,20 @@ function readDiscogsCsv($filename)
 {
     $handle = fopen($filename, 'r');
 
-    $columns = fgetcsv($handle);
+    if (false === $handle) {
+        die("Unable to open file " . $filename);
+    }
+
+    $columns = array_map('strtolower', fgetcsv($handle));
 
     $records = array();
 
     while (false !== ($record = fgetcsv($handle))) {
+
         $records[
             mapFormat(
                 $record[
-                    array_search('Format', $columns)
+                    array_search('format', $columns)
                 ]
             )
         ][] = array_combine($columns, $record);
@@ -56,14 +61,16 @@ function printRecords($records)
         echo "\n" . $format . "\n" . '***' . "\n";
 
         usort($recordsByFormat, function ($a, $b) {
-            return strcasecmp($a['Artist'], $b['Artist']);
+            return strcasecmp($a['artist'], $b['artist']);
         });
 
         foreach ($recordsByFormat as $record) {
-            echo getArtist($record['Artist']) .
+            echo
+                 (array_key_exists('price', $record) ? (int)$record['price'] . ' e ': '' ) .
+                 getArtist($record['artist']) .
                  ' - ' .
-                 $record['Title'] .
-                 getFormatModifiers($record['Format']) .
+                 $record['title'] .
+                 getFormatModifiers($record['format']) .
                  "\n";
         }
     }
