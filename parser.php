@@ -88,7 +88,7 @@ function printRecords($records)
 function getArtist($artist)
 {
     return preg_replace(
-        '#\ \([0-9]\)#',
+        '#\ \([0-9]+\)#',
         '',
         $artist);
 }
