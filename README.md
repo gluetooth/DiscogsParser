@@ -1,5 +1,5 @@
 # DiscogsParser
-A very simple and crude PHP script to parse CSV dumps from Discogs.
+A very simple and crude PHP>=5.4 script to parse CSV dumps from Discogs.
 
 ## Usage
 * Dump your record collection to CSV in Discogs
